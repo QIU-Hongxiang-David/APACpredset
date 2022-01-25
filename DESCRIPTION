@@ -1,0 +1,16 @@
+Package: APACpredset
+Type: Package
+Title: Asymptotically Probably Approximately Correct prediction sets
+Version: 0.1.0
+Author: Hongxiang Qiu
+Maintainer: Hongxiang Qiu <david940408@gmail.com>
+Description: This package implements various methods to estimate APAC prediction sets under covariate shift.
+    A scoring function should have been trained using data from the source population, while observations with missing dependent variable/outcome/label are available from the target population.
+    When the outcome in the target population is observed or the likelihood ratio between target and source populations are known, PAC is achievable by other methods and methods in this package might be inferior.
+License: GPL-3
+Depends: SuperLearner
+Imports: assertthat, DescTools
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.1.2
+Roxygen: list(markdown = TRUE)
