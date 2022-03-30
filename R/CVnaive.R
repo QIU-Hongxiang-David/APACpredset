@@ -96,15 +96,14 @@ CVnaive<-function(A,X,Y,scores,candidate.tau,error.bound=0.05,conf.level=.95,nfo
     CI.upper<-psi+SE*qnorm(conf.level)
     if(!select.tau){
         list(tau=candidate.tau,error.CI.upper=as.numeric(CI.upper),error.est=as.numeric(psi))
-    }else if(any(CI.upper<=error.bound)){
-        feasible.indicator<-CI.upper<=error.bound
-        if(all(feasible.indicator)){
+    }else if(CI.upper[1]<=error.bound){
+        tau.index<-find.max.true(CI.upper<error.bound)
+        if(tau.index==length(CI.upper)){
             warning("Larest threshold is selected. Try a different set of candidate.tau with a larger max value.")
         }
-        tau<-max(candidate.tau[feasible.indicator])
-        tau.index<-which(candidate.tau==tau)
+        tau<-candidate.tau[tau.index]
         list(tau=tau,error.CI.upper=CI.upper[tau.index],error.est=psi[tau.index],
-             feasible.tau=candidate.tau[feasible.indicator],feasible.tau.error.CI.upper=CI.upper[feasible.indicator],feasible.tau.error.est=psi[feasible.indicator])
+             feasible.tau=candidate.tau[1:tau.index],feasible.tau.error.CI.upper=CI.upper[1:tau.index],feasible.tau.error.est=psi[1:tau.index])
     }else{
         message("No candidate threshold tau satisfies the criterion! Try smaller candidate.tau!")
         invisible()
@@ -216,12 +215,6 @@ CVnaive_bisec<-function(A,X,Y,scores,tau.interval=c(0,1),error.bound=0.05,conf.l
     SE<-sqrt(sigma2/n)
     CI.upper<-psi+SE*qnorm(conf.level)
     
-    if(any(CI.upper==error.bound)){
-        tau<-max(tau.interval[CI.upper==error.bound])
-        tau.index<-which(tau.interval==tau)
-        return(list(tau=tau,error.CI.upper=CI.upper[tau.index],error.est=psi[tau.index]))
-    }
-    
     tau.l<-tau.interval[1]
     tau.u<-tau.interval[2]
     psi.l<-as.numeric(psi[1])
@@ -264,9 +257,7 @@ CVnaive_bisec<-function(A,X,Y,scores,tau.interval=c(0,1),error.bound=0.05,conf.l
         new.CI.upper<-new.psi+new.SE*qnorm(conf.level)
         new.sign<-sign(new.CI.upper-error.bound)
         
-        if(new.sign==0){
-            return(list(tau=new.tau,error.CI.upper=new.CI.upper,error.est=new.psi))
-        }else if(new.sign==sign.l){
+        if(new.sign==sign.l){
             tau.l<-new.tau
             psi.l<-new.psi
             CI.upper.l<-new.CI.upper
@@ -379,12 +370,6 @@ CVnaive_bisec2<-function(A,X,Y,scores,error.bound=0.05,conf.level=.95,nfolds=5,g
     SE<-sqrt(sigma2/n)
     CI.upper<-psi+SE*qnorm(conf.level)
     
-    if(any(CI.upper==error.bound)){
-        tau<-max(sorted.scores[CI.upper==error.bound])
-        tau.index<-which(sorted.scores[tau.index.interval]==tau)
-        return(list(tau=tau,error.CI.upper=CI.upper[tau.index],error.est=psi[tau.index]))
-    }
-    
     tau.index.l<-tau.index.interval[1]
     tau.index.u<-tau.index.interval[2]
     psi.l<-as.numeric(psi[1])
@@ -427,9 +412,7 @@ CVnaive_bisec2<-function(A,X,Y,scores,error.bound=0.05,conf.level=.95,nfolds=5,g
         new.CI.upper<-new.psi+new.SE*qnorm(conf.level)
         new.sign<-sign(new.CI.upper-error.bound)
         
-        if(new.sign==0){
-            return(list(tau=sorted.scores[new.tau.index],error.CI.upper=new.CI.upper,error.est=new.psi))
-        }else if(new.sign==sign.l){
+        if(new.sign==sign.l){
             tau.index.l<-new.tau.index
             psi.l<-new.psi
             CI.upper.l<-new.CI.upper

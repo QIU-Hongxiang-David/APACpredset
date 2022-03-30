@@ -77,3 +77,13 @@ CV.est.Q<-function(A,X,Z,folds,Q.control){
         out
     })
 }
+
+#find the index i of x such that x[j] (j<=i) are all TRUE
+find.max.true<-function(x){
+    for(i in 1:length(x)){
+        if(!x[i]){
+            return(i-1)
+        }
+    }
+    length(x)
+}

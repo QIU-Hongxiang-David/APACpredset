@@ -17,7 +17,7 @@ We consider prediction sets of the form
 where \eqn{\tau}{tau} is a threshold.
 
 A prediction set \eqn{\hat{C}_n}{hat(C)_n} estimated from data is said to be APAC if
-\deqn{P(P(Y \notin \hat{C}_n(X)) \le \epsilon+o_p(1) | \hat{C}_n) \ge 1-\delta-o_p(1)}{P(P(Y notin hat(C)_n(X)) <= epsilon+op(1) | hat(C)_n)>=1-delta-op(1)}
+\deqn{P(P(Y \notin \hat{C}_n(X)) \le \epsilon | \hat{C}_n) \ge 1-\delta-o(1)}{P(P(Y notin hat(C)_n(X)) <= epsilon | hat(C)_n)>=1-delta-o(1)}
 as sample size \eqn{n}{n} tends to infinity. Here, \eqn{(X,Y)}{(X,Y)} is an new draw from the target population that is independent of \eqn{\hat{C}_n}{hat(C)_n}, \eqn{\epsilon}{epsilon} is a desired upper bound on the true coverage error, and \eqn{1-\delta}{1-delta} is a desired confidence level of the statement on the coverage error of \eqn{\hat{C}_n}{hat(C)_n}. The methods in this package aim at selecting a threshold from candidate thresholds that leads to an APAC prediction set that is as small as possible (namely the threshold is as large as possible).
 
 When either \eqn{Y}{Y} is observed in data from the target population or the likelihood ratio between the target population and source population is known, other methods that produce PAC prediction sets may be preferrable to those in this package because PAC is a finite-sample guarantee while APAC is large-sample property.
