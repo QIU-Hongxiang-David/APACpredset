@@ -13,7 +13,7 @@ In this package, we implement methods to calculate Asymptotically Probably Appro
 \item{Candidate thresholds}{A finite set of candidate thresholds. (More info below)}
 }
 We consider prediction sets of the form
-\deqn{C_\tau(x)=\{y: s(x,y) \le \tau\}}{C_tau(x)={y: s(x,y) <= tau}}
+\deqn{C_\tau(x)=\{y: s(x,y) \ge \tau\}}{C_tau(x)={y: s(x,y) >= tau}}
 where \eqn{\tau}{tau} is a threshold.
 
 A prediction set \eqn{\hat{C}_n}{hat(C)_n} estimated from data is said to be APAC if
